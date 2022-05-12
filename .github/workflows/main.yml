@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-test-deploy:
@@ -10,11 +13,18 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set-up node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: "17.x"
-      - run: npm install
-      - run: node server.js
+      - name: Heroku Data
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "hf-recipe-app"
+          heroku_email: "eshwarkalyan78@gmail.com"
+
+      - run: npm ci
+      - run: npm run start
