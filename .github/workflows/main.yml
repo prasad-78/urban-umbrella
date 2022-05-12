@@ -8,7 +8,7 @@ on:
       - main
 
 jobs:
-  build-test-deploy:
+  build :
     runs-on: ubuntu-latest
 
     steps:
@@ -19,12 +19,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "17.x"
+      - run: npm ci
+
+  deploy :
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Heroku Data
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "hf-recipe-app"
           heroku_email: "eshwarkalyan78@gmail.com"
-
-      - run: npm ci
-      - run: npm run start
