@@ -20,20 +20,11 @@ jobs:
         with:
           node-version: "17.x"
 
-      - name: Read secret
-        env:
-          ci: true
-          ATLAS_URI: ${{ secrets.ATLAS_LAMBDA_URI }}
-        run: (echo "ATLAS_LAMBDA_URI=$ATLAS_LAMBDA_URI" > config.env && npm ci)
-
   deploy :
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
       - name: Heroku Data
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
