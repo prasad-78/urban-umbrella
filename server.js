@@ -2,13 +2,22 @@ import express from "express";
 const app = express();
 const port = process.env.PORT || 8080;
 import mongoose from "mongoose";
-import getRecipeController from "./app/controllers/getRecipeController.js";
-import getRecipesController from "./app/controllers/getRecipesController.js";
-import postRecipeController from "./app/controllers/postRecipeController.js";
-import patchRecipeController from "./app/controllers/patchRecipeController.js";
-import deleteRecipeController from "./app/controllers/deleteRecipeController.js";
+import getRecipeController from "./controllers/getRecipeController.js";
+import getRecipesController from "./controllers/getRecipesController.js";
+import postRecipeController from "./controllers/postRecipeController.js";
+import patchRecipeController from "./controllers/patchRecipeController.js";
+import deleteRecipeController from "./controllers/deleteRecipeController.js";
 
 const MONGO_URI = process.env.ATLAS_URI;
+
+mongoose
+  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then()
+  .catch((err) => {
+    console.error("App starting error:", err.message);
+    process.exit(1);
+  });
+var db = mongoose.connection;
 
 app.use(express.json());
 
