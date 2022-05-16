@@ -1,3 +1,5 @@
+import { validationErrorWithData, createResponse } from '../helpers/response.js';
+
 import Recipe from "../models/recipe.js";
 
 export default function (req, res) {
@@ -15,11 +17,10 @@ export default function (req, res) {
 
 	recipe.save()
 		.then((savedRecipe) => {
-			console.log(savedRecipe, 'string saved');
-			res.send(savedRecipe);
+			return createResponse(res, savedRecipe);
 		})
 		.catch((err) => {
-			res.status(400).send({status: 'Error',reason: err.message});
+			return validationErrorWithData(res, err);
 		});
 
 }

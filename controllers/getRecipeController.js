@@ -1,11 +1,12 @@
+import {successResponseWithData, errorResponse} from '../helpers/response.js';
 import Recipe from "../models/recipe.js";
 
 export default function (req, res) {
   Recipe.findById(req.params.id)
-    .then((recipe) => {
-      res.send(recipe);
+		.then((recipe) => {
+			return successResponseWithData(res, recipe);
     })
     .catch((err) => {
-      res.error(err);
+      return errorResponse(res, err)
     });
 }

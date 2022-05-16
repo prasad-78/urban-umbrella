@@ -5,9 +5,9 @@ var Schema = mongoose.Schema;
 var RecipeSchema = new Schema({
 	id: {type: Number},
 	title: { type: String, required: true },
-	subTitle: { type: String, required: true},
+	subtitle: { type: String, required: true},
 	description: {type: String, required: true},
-	ingredients: { type: Array, ref: "Ingredient" },
+	ingredients: { type: Schema.Types.ObjectId, ref: "Ingredient" , required: false },
 	preperationTime: { type: String, required: true },
 	cookingDifficulty: { type: String, required: true },
 	utensils: { type: Array, required: true },
