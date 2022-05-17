@@ -1,12 +1,8 @@
 import express from "express";
-const app = express();
 const port = process.env.PORT || 8080;
 import mongoose from "mongoose";
-import getRecipeController from "./controllers/getRecipeController.js";
-import getRecipesController from "./controllers/getRecipesController.js";
-import postRecipeController from "./controllers/postRecipeController.js";
-import patchRecipeController from "./controllers/patchRecipeController.js";
-import deleteRecipeController from "./controllers/deleteRecipeController.js";
+import apiRouter from "./routes/api.js";
+import { notFoundResponse } from "./helpers/response.js"
 
 const MONGO_URI = process.env.ATLAS_URI;
 
@@ -19,17 +15,13 @@ mongoose
   });
 var db = mongoose.connection;
 
+var app = express();
 app.use(express.json());
+app.use("/", apiRouter);
 
-app.get("/recipes", getRecipesController);
-
-app.post("/recipe", postRecipeController);
-
-app.get("/recipe/:id", getRecipeController);
-
-app.patch("/recipe/:id", patchRecipeController);
-
-app.delete("/recipe/:id", deleteRecipeController);
+app.all("*", function (req, res) {
+		return notFoundResponse(res, "Page Not Found");
+})
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Example app listening on port ${port}`);

@@ -1,18 +1,28 @@
 import mongoose from "mongoose";
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var RecipeSchema = new Schema({
+const RecipeSchema = new Schema({
 	id: {type: Number},
 	title: { type: String, required: true },
 	subtitle: { type: String, required: true},
 	description: {type: String, required: true},
-	ingredients: { type: Schema.Types.ObjectId, ref: "Ingredient" , required: false },
+	ingredients: [{
+		ingredient: {type: Schema.Types.ObjectId, ref: 'Ingredient'},
+		quantity: {type: Number, required: false},
+	}],
 	preperationTime: { type: String, required: true },
 	cookingDifficulty: { type: String, required: true },
 	utensils: { type: Array, required: true },
 	tags: { type: Array},
-	not_included: { type: Array, ref: "Ingredient" },
+	not_included: [{
+		ingredient: {type: Schema.Types.ObjectId, ref: 'Ingredient'},
+		quantity: {type: Number, required: false}
+	}],
+	instructions: [{
+		step: { type: String, required: true },
+		stepnum: { type: Number, required: true }
+	}],
 	comments: { type: Array}
 }, {timestamps: true});
 
