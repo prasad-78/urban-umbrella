@@ -22,8 +22,11 @@ export function errorResponse (res, data) {
 	return res.status(500).json(data);
 }
 
-export function notFoundResponse (res) {
-	return res.status(404).json([]);
+export function notFoundResponse(res, msg) {
+	const data = {
+		message: msg
+	}
+	return res.status(404).json(data);
 }
 
 export function validationErrorWithData (res, data) {

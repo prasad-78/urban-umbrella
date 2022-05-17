@@ -1,8 +1,8 @@
 import express from "express";
 const port = process.env.PORT || 8080;
 import mongoose from "mongoose";
-import apiRouter from "./routes/api.js";
-import { notFoundResponse } from "./helpers/response.js"
+import apiRouter from "./src/routes/api.js";
+import { notFoundResponse } from "./src/helpers/response.js"
 
 const MONGO_URI = process.env.ATLAS_URI;
 
