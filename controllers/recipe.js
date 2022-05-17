@@ -14,7 +14,7 @@ export default class RecipeData {
     this.subTitle = data.subTitle;
     this.preperationTime = preperationTime;
     this.cookingDifficulty = cookingDifficulty;
-    this.utensils = utensils;‰
+    this.utensils = utensils;
   }
 }
 
