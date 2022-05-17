@@ -4,7 +4,8 @@ import {
   errorResponse,
   successResponseWithData,
 	validationErrorWithData,
-	createResponse
+	createResponse,
+	noContentResponse
 } from "../helpers/response.js";
 
 export default class IngredientData {
@@ -90,7 +91,7 @@ export function ingredientDelete(req, res) {
       }
       Ingredient.findByIdAndDelete(req.params.id)
         .then((deletedIngredient) => {
-          res.send(deletedIngredient);
+          return noContentResponse(res);
         })
         .catch((err) => {
           return errorResponse(res, err);

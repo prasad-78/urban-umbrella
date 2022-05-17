@@ -4,7 +4,8 @@ import {
   errorResponse,
   successResponseWithData,
 	validationErrorWithData,
-	createResponse
+	createResponse,
+	noContentResponse
 } from "../helpers/response.js";
 
 export default class RecipeData {
@@ -79,7 +80,7 @@ export function recipeDelete(req, res) {
       }
       Recipe.findByIdAndDelete(req.params.id)
         .then((deletedRecipe) => {
-          res.send(deletedRecipe);
+          return noContentResponse(res);
         })
         .catch((err) => {
           return errorResponse(res, err);
