@@ -5,7 +5,7 @@ import {
   errorResponse,
   successResponseWithData,
 	validationErrorWithData,
-	validationErrorForWrongPassword
+	validationErrorForWrongCredentials
 } from "../helpers/response.js";
 
 export default class LoginData {
@@ -33,7 +33,7 @@ export async function loginUser(req, res) {
         );
 				return successResponseWithData(res, { token : token });
 			}
-			return validationErrorForWrongPassword(res, {name: "Validation Error", message: "Invalid Credentials"})
+			return validationErrorForWrongCredentials(res, {name: "Validation Error", message: "Invalid Credentials"})
     })
 		.catch((err) => {
       return errorResponse(res, err);

@@ -37,7 +37,7 @@ export function validationErrorWithData (res, data) {
 	return res.status(400).json(resData);
 }
 
-export function validationErrorForWrongPassword(res, data) {
+export function validationErrorForWrongCredentials (res, data) {
 	var resData = {
 		status: data.name,
 		message: data.message
