@@ -3,6 +3,7 @@ const port = process.env.PORT || 8080;
 import mongoose from "mongoose";
 import apiRouter from "./src/routes/api.js";
 import { notFoundResponse } from "./src/helpers/response.js"
+import auth from "./src/middleware/auth.js";
 
 const MONGO_URI = process.env.ATLAS_URI;
 
@@ -17,6 +18,7 @@ var db = mongoose.connection;
 
 var app = express();
 app.use(express.json());
+app.use(auth)
 app.use("/", apiRouter);
 
 app.all("*", function (req, res) {

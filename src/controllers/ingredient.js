@@ -1,35 +1,19 @@
 import Ingredient from "../models/ingredient.js";
 import {
-  successResponse,
   errorResponse,
   successResponseWithData,
 	validationErrorWithData,
 	createResponse,
 	noContentResponse
 } from "../helpers/response.js";
-
+import auth from "../middleware/auth.js";
 export default class IngredientData {
-	constructor(data) {
-		this.title = title
-		this.description = description
-		this.unitOfMeasure = unitOfMeasure
-		this.fat = fat
-		this.energy = energy
-		this.energyPerUnit = energyPerUnit
-		this.ofWhichSaturates = ofWhichSaturates
-		this.carbohydrate = carbohydrate
-		this.ofWhichSugars = ofWhichSugars
-		this.dietaryFibre = dietaryFibre
-		this.protein = protein
-		this.cholesterol = cholesterol
-		this.sodium = sodium
-  }
 }
 
-export function ingredientList(req, res) {
+export function ingredientList (req, res) {
   Ingredient.find({})
     .then((allIngredients) => {
-      return successResponse(res, allIngredients);
+      return successResponseWithData(res, allIngredients);
     })
     .catch((err) => {
       return errorResponse(res, err);

@@ -20,10 +20,13 @@
   },
   "homepage": "https://github.com/prasad-78/urban-umbrella#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.3"
   },
   "devDependencies": {
+    "mongoose-paginate": "^5.0.3",
     "nodemon": "^2.0.16"
   }
 }

@@ -1,5 +1,5 @@
 export function successResponse (res, data) {
-	return res.status(200).json(data);
+	return res.status(200).json(null);
 }
 
 export function successResponseWithData(res, data) {
@@ -35,4 +35,12 @@ export function validationErrorWithData (res, data) {
 		message: data.message
 	};
 	return res.status(400).json(resData);
+}
+
+export function validationErrorForWrongPassword(res, data) {
+	var resData = {
+		status: data.name,
+		message: data.message
+	};
+	return res.status(401).json(resData);
 }

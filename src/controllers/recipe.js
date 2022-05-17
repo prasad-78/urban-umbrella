@@ -1,6 +1,5 @@
 import Recipe from "../models/recipe.js";
 import {
-  successResponse,
   errorResponse,
   successResponseWithData,
 	validationErrorWithData,
@@ -9,20 +8,12 @@ import {
 } from "../helpers/response.js";
 
 export default class RecipeData {
-  constructor(data) {
-    this.id = data._id;
-    this.title = data.title;
-    this.subTitle = data.subTitle;
-    this.preperationTime = preperationTime;
-    this.cookingDifficulty = cookingDifficulty;
-    this.utensils = utensils;
-  }
 }
 
 export function recipeList(req, res) {
   Recipe.find({})
     .then((allRecipes) => {
-      return successResponse(res, allRecipes);
+      return successResponseWithData(res, allRecipes);
     })
     .catch((err) => {
       return errorResponse(res, err);
