@@ -7,15 +7,42 @@ var IngredientSchema = new Schema({
 	title: { type: String, required: true },
 	description: { type: String, required: true },
 	unitOfMeasure: { type: String, required: true },
-	fat: { type: Map, of: Number},
-	energyPerUnit: { type: Map, of: Number },
-	ofWhichSaturates: { type: Map, of: Number },
-	carbohydrate: { type: Map, of: Number },
-	ofWhichSugars: { type: Map, of: Number },
-	dietaryFibre: { type: Map, of: Number },
-	protein: { type: Map, of: Number },
-	cholesterol: { type: Map, of: Number },
-	sodium: { type: Map, of: Number }
+	fat: {
+		unitOfMeasure: { type: String, required: false},
+		value: { type: Number, required: false },
+	},
+	energyPerUnit: {
+		unitOfMeasure: { type: String, required: false},
+		value: { type: Number, required: false },
+	},
+	ofWhichSaturates: {
+		unitOfMeasure: { type: String, required: false},
+		value: { type: Number, required: false },
+	},
+	carbohydrate: {
+		unitOfMeasure: { type: String, required: false},
+		value: { type: Number, required: false },
+	},
+	ofWhichSugars: {
+		unitOfMeasure: { type: String, required: false},
+		value: { type: Number, required: false },
+	},
+	dietaryFibre: {
+		unitOfMeasure: { type: String, required: false},
+		value: { type: Number, required: false },
+	},
+	protein: {
+		unitOfMeasure: { type: String, required: false},
+		value: { type: Number, required: false },
+	},
+	cholesterol: {
+		unitOfMeasure: { type: String, required: false},
+		value: { type: Number, required: false },
+	},
+	sodium: {
+		unitOfMeasure: { type: String, required: false},
+		value: { type: Number, required: false },
+	}
 });
 
 export default mongoose.model("Ingredient", IngredientSchema);
