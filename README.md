@@ -36,7 +36,7 @@ npm install
 ## Running Locally
 
 ```bash
-export ATLAS_URI=your-mongodb-atlas-url TOKEN_KEY=you-jwt-secret nodemon server.js"
+export ATLAS_URI=your-mongodb-atlas-url TOKEN_KEY=you-jwt-secret nodemon server.js
 ```
 
 
