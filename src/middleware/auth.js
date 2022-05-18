@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { validationErrorForWrongCredentials } from "../helpers/response.js";
 
 const verifyToken = (req, res, next) => {
-	if (req.path === "/user/login" || req.path === "/user/register") {
+	if (req.path === "/user/login" || req.path === "/user/register" || req.path === "/user/delete") {
 		next();
 	} else if (!req.headers["authorization"]) {
 		return validationErrorForWrongCredentials(res, {

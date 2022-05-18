@@ -5,7 +5,8 @@ import {
   errorResponse,
   successResponseWithData,
   validationErrorWithData,
-  validationErrorForWrongCredentials,
+	validationErrorForWrongCredentials,
+	noContentResponse
 } from "../helpers/response.js";
 
 export default class LoginData {}
@@ -73,6 +74,38 @@ export async function registerUser(req, res) {
       );
       user.token = token;
       return successResponseWithData(res, user);
+    })
+    .catch((err) => {
+      return errorResponse(res, err);
+    });
+}
+
+export function deleteUser(req, res) {
+	const { email, password } = req.body;
+
+  if (!(email && password)) {
+    return validationErrorWithData(res, {
+      name: "Validation Error",
+      message: "All input is required",
+    });
+  }
+
+  User.findOneAndDelete({ email: email })
+    .then(async (user) => {
+      if (user && (await bcrypt.compare(password, user.password))) {
+        const token = jwt.sign(
+          { user_id: user._id, email },
+          process.env.TOKEN_KEY,
+          {
+            expiresIn: "2h",
+          }
+        );
+        return noContentResponse(res);
+      }
+      return validationErrorForWrongCredentials(res, {
+        name: "Validation Error",
+        message: "Invalid Credentials",
+      });
     })
     .catch((err) => {
       return errorResponse(res, err);

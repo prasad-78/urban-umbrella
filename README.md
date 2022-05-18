@@ -18,9 +18,9 @@
 - [npm v8.0+](https://www.npmjs.com)
 
 
-### Using Git (recommended)
+## Getting Started
 
-Clone the project from github. Change "myproject" to your project name.
+Clone the project from github.
 
 ```bash
 git clone https://github.com/prasad-78/urban-umbrella.git
@@ -31,4 +31,17 @@ git clone https://github.com/prasad-78/urban-umbrella.git
 ```bash
 cd urban-umbrella
 npm install
+```
+
+## Running Locally
+
+```bash
+export ATLAS_URI=your-mongodb-atlas-url TOKEN_KEY=you-jwt-secret nodemon server.js"
+```
+
+
+## Run Tests
+In the postman folder use the collection to run tests.
+```
+
 ```
