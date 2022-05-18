@@ -44,3 +44,7 @@ export function validationErrorForWrongCredentials (res, data) {
 	};
 	return res.status(401).json(resData);
 }
+
+export function userAlreadyExistsError(res) {
+	return res.status(409).json({message: "User Already Exist. Please Login"});
+}

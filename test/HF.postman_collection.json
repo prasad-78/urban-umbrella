@@ -15,11 +15,15 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"The response has all properties\", () => {",
-									"const responseJson = pm.response.json();",
-									"pm.expect(responseJson.firstName).to.eql(pm.environment.get('firstName'));",
-									"pm.expect(responseJson.lastName).to.eql(pm.environment.get('lastName'));",
-									"pm.expect(responseJson.email).to.eql(pm.environment.get('email'));",
+									"pm.test(\"Verify the response has all properties\", () => {",
+									"    const responseJson = pm.response.json();",
+									"    if(pm.response.status == 200) {",
+									"        pm.expect(responseJson.firstName).to.eql(pm.environment.get('firstName'));",
+									"        pm.expect(responseJson.lastName).to.eql(pm.environment.get('lastName'));",
+									"        pm.expect(responseJson.email).to.eql(pm.environment.get('email'));",
+									"    } else if(pm.response.status == 409) {",
+									"        pm.expect(responseJson.message).to.equal(\"User Already Exist. Please Login\");",
+									"    }",
 									"});"
 								],
 								"type": "text/javascript"
@@ -58,8 +62,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"let response=pm.response.json();",
-									"pm.environment.set('AccessToken', response.token);"
+									"pm.test(\"Verify login should return 200 with token\", () => {",
+									"    const responseJson = pm.response.json();",
+									"    pm.environment.set('AccessToken', responseJson.token);",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(Object.keys(responseJson).includes('token')).be.true;",
+									"})"
 								],
 								"type": "text/javascript"
 							}
@@ -92,6 +100,19 @@
 				},
 				{
 					"name": "Get All Ingredients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify get all for Ingredients\", () => {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -125,8 +146,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"let response=pm.response.json();",
-									"pm.environment.set('ingredient_id', response._id);"
+									"pm.test(\"Verifty creating a new Ingredient should return 201\", () => {",
+									"    const response=pm.response.json();",
+									"    pm.environment.set('ingredient_id', response._id);",
+									"    pm.response.to.have.status(201);",
+									"})"
 								],
 								"type": "text/javascript"
 							}
@@ -169,6 +193,21 @@
 				},
 				{
 					"name": "Get Ingredient by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify Ingredients by Id\", () => {",
+									"    const response=pm.response.json();",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(response._id).to.eql(pm.environment.get('ingredient_id'))",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -197,6 +236,21 @@
 				},
 				{
 					"name": "Patch Ingredient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify Updating a Ingredient by Id\", () => {",
+									"    const response=pm.response.json();",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(response._id).to.eql(pm.environment.get('ingredient_id'))",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -234,6 +288,19 @@
 				},
 				{
 					"name": "Delete Ingredient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify delete Ingredients by Id\", () => {",
+									"    pm.response.to.have.status(204);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -262,6 +329,22 @@
 				},
 				{
 					"name": "Post Ingredient With Wrong Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify Wrong Post body returns 400\", () => {",
+									"    const response=pm.response.json();",
+									"    pm.expect(response.status).to.equal(\"ValidationError\")",
+									"    pm.response.to.have.status(400);",
+									"",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -298,6 +381,19 @@
 				},
 				{
 					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify delete user with user name and password\", () => {",
+									"    pm.response.to.have.status(204);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -345,11 +441,15 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"The response has all properties\", () => {",
-									"const responseJson = pm.response.json();",
-									"pm.expect(responseJson.firstName).to.eql(pm.environment.get('firstName'));",
-									"pm.expect(responseJson.lastName).to.eql(pm.environment.get('lastName'));",
-									"pm.expect(responseJson.email).to.eql(pm.environment.get('email'));",
+									"pm.test(\"Verify the response has all properties\", () => {",
+									"    const responseJson = pm.response.json();",
+									"    if(pm.response.status == 200) {",
+									"        pm.expect(responseJson.firstName).to.eql(pm.environment.get('firstName'));",
+									"        pm.expect(responseJson.lastName).to.eql(pm.environment.get('lastName'));",
+									"        pm.expect(responseJson.email).to.eql(pm.environment.get('email'));",
+									"    } else if(pm.response.status == 409) {",
+									"        pm.expect(responseJson.message).to.equal(\"User Already Exist. Please Login\");",
+									"    }",
 									"});"
 								],
 								"type": "text/javascript"
@@ -388,8 +488,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"let response=pm.response.json();",
-									"pm.environment.set('AccessToken', response.token);"
+									"pm.test(\"Verify login should return 200 with token\", () => {",
+									"    const responseJson = pm.response.json();",
+									"    pm.environment.set('AccessToken', responseJson.token);",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(Object.keys(responseJson).includes('token')).be.true;",
+									"})"
 								],
 								"type": "text/javascript"
 							}
@@ -422,6 +526,19 @@
 				},
 				{
 					"name": "Get All Recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify get all for Recipes\", () => {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -454,8 +571,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"let response=pm.response.json();",
-									"pm.environment.set('recipe_id', response._id);"
+									"pm.test(\"Verifty creating a new Recipe should return 201\", () => {",
+									"    const response=pm.response.json();",
+									"    pm.environment.set('recipe_id', response._id);",
+									"    pm.response.to.have.status(201);",
+									"})"
 								],
 								"type": "text/javascript"
 							}
@@ -497,6 +617,21 @@
 				},
 				{
 					"name": "Get Recipe by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify Recipe by Id\", () => {",
+									"    const response=pm.response.json();",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(response._id).to.eql(pm.environment.get('recipe_id'))",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -525,6 +660,21 @@
 				},
 				{
 					"name": "Patch Recipe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify Updating a Recipe by Id\", () => {",
+									"    const response=pm.response.json();",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(response._id).to.eql(pm.environment.get('recipe_id'))",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -562,6 +712,19 @@
 				},
 				{
 					"name": "Delete Recipe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify delete Recipe by Id\", () => {",
+									"    pm.response.to.have.status(204);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -590,6 +753,21 @@
 				},
 				{
 					"name": "Post recipe With Wrong Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify Wrong Post body returns 400\", () => {",
+									"    const response=pm.response.json();",
+									"    pm.expect(response.status).to.equal(\"ValidationError\")",
+									"    pm.response.to.have.status(400);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -626,6 +804,19 @@
 				},
 				{
 					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify delete user with user name and password\", () => {",
+									"    pm.response.to.have.status(204);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",

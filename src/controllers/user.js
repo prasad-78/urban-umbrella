@@ -6,7 +6,8 @@ import {
   successResponseWithData,
   validationErrorWithData,
 	validationErrorForWrongCredentials,
-	noContentResponse
+	noContentResponse,
+	userAlreadyExistsError
 } from "../helpers/response.js";
 
 export default class LoginData {}
@@ -55,8 +56,8 @@ export async function registerUser(req, res) {
 
   const oldUser = await User.findOne({ email: email });
 
-  if (oldUser) {
-    return res.status(409).send("User Already Exist. Please Login");
+	if (oldUser) {
+		return userAlreadyExistsError(res)
   }
 
   const encryptedPassword = await bcrypt.hash(password, 10);
