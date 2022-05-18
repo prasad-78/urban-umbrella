@@ -1,22 +1,26 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import { validationErrorForWrongCredentials } from "../helpers/response.js";
 
 const verifyToken = (req, res, next) => {
-	console.log(req.path);
-	if (req.path === '/user/login' || req.path === '/user/register') {
+	if (req.path === "/user/login" || req.path === "/user/register") {
 		next();
+	} else if (!req.headers["authorization"]) {
+		return validationErrorForWrongCredentials(res, {
+			name: "Validation Error",
+			message: "No Token Found",
+		});
 	} else {
 		const token = req.headers["authorization"].split(" ")[1];
-
-  if (!token) {
-    return validationErrorForWrongCredentials(req, {name: "Validation Error", message: "No Token Found"})
-  }
-  try {
-    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-    req.user = decoded;
-  } catch (err) {
-    return validationErrorForWrongCredentials(req, {name: "Validation Error", message: "Invalid Credentials"})
-  }
-  return next();
+		try {
+			const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+			req.user = decoded;
+		} catch (err) {
+			return validationErrorForWrongCredentials(res, {
+				name: "Validation Error",
+				message: "Invalid Credentials",
+			});
+		}
+		return next();
 	}
 };
 

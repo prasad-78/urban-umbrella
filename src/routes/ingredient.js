@@ -1,10 +1,10 @@
 import express from "express";
 import {
-  ingredientList,
-  ingredientDetail,
-  ingredientCreate,
-  ingredientUpdate,
-  ingredientDelete,
+	ingredientList,
+	ingredientDetail,
+	ingredientCreate,
+	ingredientUpdate,
+	ingredientDelete,
 } from "../controllers/ingredient.js";
 
 const router = express.Router();

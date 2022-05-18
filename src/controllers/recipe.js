@@ -2,13 +2,12 @@ import Recipe from "../models/recipe.js";
 import {
   errorResponse,
   successResponseWithData,
-	validationErrorWithData,
-	createResponse,
-	noContentResponse
+  validationErrorWithData,
+  createResponse,
+  noContentResponse,
 } from "../helpers/response.js";
 
-export default class RecipeData {
-}
+export default class RecipeData {}
 
 export function recipeList(req, res) {
   Recipe.find({})
@@ -70,7 +69,7 @@ export function recipeDelete(req, res) {
         return noContentResponse(res);
       }
       Recipe.findByIdAndDelete(req.params.id)
-        .then((deletedRecipe) => {
+        .then(() => {
           return noContentResponse(res);
         })
         .catch((err) => {

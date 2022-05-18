@@ -1,9 +1,9 @@
-export function successResponse (res, data) {
+export function successResponse (res) {
 	return res.status(200).json(null);
 }
 
 export function successResponseWithData(res, data) {
-		return res.status(200).json(data);
+	return res.status(200).json(data);
 }
 
 export function createResponse (res, data) {
@@ -15,17 +15,17 @@ export function noContentResponse (res) {
 }
 
 export function errorResponse (res, data) {
-	var data = {
+	var errData = {
 		status: data.name,
 		message: data.message
 	};
-	return res.status(500).json(data);
+	return res.status(500).json(errData);
 }
 
 export function notFoundResponse(res, msg) {
 	const data = {
 		message: msg
-	}
+	};
 	return res.status(404).json(data);
 }
 

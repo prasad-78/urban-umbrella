@@ -8,7 +8,7 @@ const RecipeSchema = new Schema({
 	subtitle: { type: String, required: true},
 	description: {type: String, required: true},
 	ingredients: [{
-		ingredient: {type: Schema.Types.ObjectId, ref: 'Ingredient'},
+		ingredient: {type: Schema.Types.ObjectId, ref: "Ingredient"},
 		quantity: {type: Number, required: false},
 	}],
 	preperationTime: { type: String, required: true },
@@ -16,7 +16,7 @@ const RecipeSchema = new Schema({
 	utensils: { type: Array, required: true },
 	tags: { type: Array},
 	not_included: [{
-		ingredient: {type: Schema.Types.ObjectId, ref: 'Ingredient'},
+		ingredient: {type: Schema.Types.ObjectId, ref: "Ingredient"},
 		quantity: {type: Number, required: false}
 	}],
 	instructions: [{

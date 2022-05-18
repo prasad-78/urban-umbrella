@@ -4,12 +4,11 @@ import jwt from "jsonwebtoken";
 import {
   errorResponse,
   successResponseWithData,
-	validationErrorWithData,
-	validationErrorForWrongCredentials
+  validationErrorWithData,
+  validationErrorForWrongCredentials,
 } from "../helpers/response.js";
 
-export default class LoginData {
-}
+export default class LoginData {}
 
 export async function loginUser(req, res) {
   const { email, password } = req.body;
@@ -22,8 +21,8 @@ export async function loginUser(req, res) {
   }
 
   User.findOne({ email: email })
-    .then(async(user) => {
-      if (user && await bcrypt.compare(password, user.password)) {
+    .then(async (user) => {
+      if (user && (await bcrypt.compare(password, user.password))) {
         const token = jwt.sign(
           { user_id: user._id, email },
           process.env.TOKEN_KEY,
@@ -31,11 +30,14 @@ export async function loginUser(req, res) {
             expiresIn: "2h",
           }
         );
-				return successResponseWithData(res, { token : token });
-			}
-			return validationErrorForWrongCredentials(res, {name: "Validation Error", message: "Invalid Credentials"})
+        return successResponseWithData(res, { token: token });
+      }
+      return validationErrorForWrongCredentials(res, {
+        name: "Validation Error",
+        message: "Invalid Credentials",
+      });
     })
-		.catch((err) => {
+    .catch((err) => {
       return errorResponse(res, err);
     });
 }
@@ -68,9 +70,9 @@ export async function registerUser(req, res) {
         { user_id: user._id, email },
         process.env.TOKEN_KEY,
         { expiresIn: "2h" }
-			);
-			user.token = token;
-      return successResponseWithData(res,user);
+      );
+      user.token = token;
+      return successResponseWithData(res, user);
     })
     .catch((err) => {
       return errorResponse(res, err);

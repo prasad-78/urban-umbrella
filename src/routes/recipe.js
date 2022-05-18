@@ -1,10 +1,10 @@
 import express from "express";
 import {
-  recipeList,
-  recipeDetail,
-  recipeCreate,
-  recipeUpdate,
-  recipeDelete,
+	recipeList,
+	recipeDetail,
+	recipeCreate,
+	recipeUpdate,
+	recipeDelete,
 } from "../controllers/recipe.js";
 
 const router = express.Router();
