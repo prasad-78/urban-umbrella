@@ -42,6 +42,8 @@ export ATLAS_URI=your-mongodb-atlas-url TOKEN_KEY=you-jwt-secret nodemon server.
 
 ## Run Tests
 In the postman folder use the collection to run tests.
-```
-
+```bash
+npm install -g newman
+cd test
+newman run HF.postman_collection.json
 ```
